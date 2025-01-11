@@ -23,8 +23,8 @@ function App() {
     return "Loading the data....";
   }
 
-  if(error.length > 0){
-    return error
+  if (error.length > 0) {
+    return error;
   }
 
   return (

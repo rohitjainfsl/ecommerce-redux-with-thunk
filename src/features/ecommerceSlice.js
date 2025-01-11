@@ -26,7 +26,7 @@ export const ecommerceSlice = createSlice({
     loading: false,
     error: "",
     cart: [],
-    singleProduct: {}
+    singleProduct: {},
   },
   reducers: {
     handleAddToCart: (state, action) => {
@@ -41,28 +41,31 @@ export const ecommerceSlice = createSlice({
       state.singleProduct = {};
     },
   },
-  extraReducers: {
-    [fetchProducts.pending]: (state) => {
-      state.loading = true;
-    },
-    [fetchProducts.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.products = action.payload;
-    },
-    [fetchProducts.rejected]: (state) => {
-      state.error = "There was an error.";
-    },
-    [fetchProductById.pending]: (state) => {
-      state.loading = true;
-    },
-    [fetchProductById.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.singleProduct = action.payload;
-      console.log(state.singleProduct)
-    },
-    [fetchProductById.rejected]: (state) => {
-      state.error = "There was an error.";
-    },
+  extraReducers: (builder) => {
+    builder
+      // fetchProducts cases
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state) => {
+        state.error = "There was an error.";
+      })
+      // fetchProductById cases
+      .addCase(fetchProductById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleProduct = action.payload;
+        console.log(state.singleProduct);
+      })
+      .addCase(fetchProductById.rejected, (state) => {
+        state.error = "There was an error.";
+      });
   },
 });
 
